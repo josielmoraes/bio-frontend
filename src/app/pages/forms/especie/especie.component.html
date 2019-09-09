@@ -1,0 +1,94 @@
+<div class="container-fluid">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>Especie</nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="form" (ngSubmit)="submitHandler()" class="mb-4">
+          <input formControlName="id" type="hidden">
+          <div class="row form-group">
+            <div class="col-4">
+              <label for="nome" class="mr-2">Nome</label>
+              <input formControlName="nome" class="form-control" id="nome"
+                [ngClass]="{ 'is-invalid': submitted && f.nome.errors }">
+              <div *ngIf="submitted && f.nome.errors" class="invalid-feedback">
+                <div *ngIf="f.nome.errors.required">Preencher campo</div>
+              </div>
+            </div>
+            <div class="col-4">
+              <label for="genero" class="mr-2">Genero</label>
+              <input formControlName="genero" class="form-control" id="genero" [(ngModel)]="model"
+                [ngbTypeahead]="search" [resultFormatter]="formatter" [inputFormatter]="formatter"
+                [ngClass]="{ 'is-invalid': submitted && f.genero.errors }">
+              <div *ngIf="submitted && f.genero.errors" class="invalid-feedback">
+                <div *ngIf="f.genero.errors.required">Preencher campo</div>
+              </div>
+            </div>
+            <div class="col-4">
+              <label for="subgenero" class="mr-2">Subgenero</label>
+              <input formControlName="subgenero" class="form-control" id="subgenero" [(ngModel)]="modelsub"
+                [ngbTypeahead]="searchsub" [resultFormatter]="formatter" [inputFormatter]="formatter"
+                [ngClass]="{ 'is-invalid': submitted && f.subgenero.errors }">
+              <div *ngIf="submitted && f.subgenero.errors" class="invalid-feedback">
+                <div *ngIf="f.subgenero.errors.required">Preencher campo</div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class=" form-group col-4">
+              <label>
+                <input type="checkbox" formControlName="e_sinonimo" value="true" (change)="change($event)"> Sinonimo
+              </label>
+            </div>
+            <div class=" form-group col-4">
+              <label for="parent_id_especie" class="mr-2"></label>
+              <input formControlName="parent_id_especie" class="form-control" id="parent_id_especie" disabled
+                [(ngModel)]="modelespecie" [ngbTypeahead]="searchespecie" [resultFormatter]="formatter"
+                [inputFormatter]="formatter" [ngClass]="{ 'is-invalid': submitted && f.parent_id_especie.errors }">
+              <div *ngIf="submitted && f.parent_id_especie.errors" class="invalid-feedback">
+                <div *ngIf="f.parent_id_especie.errors.required">Preencher campo</div>
+              </div>
+            </div>
+            <div class=" form-group col-4">
+
+              <button class="btn btn-success mr-2">Salvar</button>
+              <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancelar</button>
+
+            </div>
+          </div>
+        </form>
+        <div class="col-12 mt-4">
+          <div class="container">
+            <table datatable [dtOptions]="dtOptions" class="table display table-striped table-bordered table-condensed"
+              style="width:100%" [dtTrigger]="dtTrigger">
+              <thead>
+                <tr>
+                  <th>Especie</th>
+                  <th>Genero</th>
+                  <th>Subgenero</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let d of especies">
+                  <td>{{ d.nome}}</td>
+                  <td>{{ d.genero?.nome}}</td>
+                  <td>{{ d.subgenero?.nome}}</td>
+                  <td>
+                    <button class="btn btn-primary btn-sm mr-2" (click)="edit(d)">
+                      <nb-icon icon="edit"></nb-icon>
+                    </button>
+                    <button class="btn btn-danger btn-sm" (click)="delete(d)">
+                      <nb-icon icon="trash"></nb-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+
+            </table>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

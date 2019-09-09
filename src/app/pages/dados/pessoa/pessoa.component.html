@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>Pessoa</nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="form" (ngSubmit)="submitHandler()" class="mb-4">
+          <div class="row">
+            <div class="col-4">
+              <label for="nome_completo" class="mr-2">Nome completo</label>
+              <input
+                formControlName="nome_completo"
+                class="form-control"
+                id="nome_completo"
+                type="text"
+                [ngClass]="{ 'is-invalid': submitted && f.nome_completo.errors }"
+              />
+              <div *ngIf="submitted && f.nome_completo.errors" class="invalid-feedback">
+                <div *ngIf="f.nome_completo.errors.required">Preencher campo</div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+<div class="container-fluid">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>Tribo</nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="form" (ngSubmit)="submitHandler()">
+
+
+          <div class="col-12 mb-3">
+            <div class="row">
+              <input formControlName="id" type="hidden">
+              <div class="form-group col-4">
+                <label for="nome" class="mr-2">Nome</label>
+                <input formControlName="nome" class="form-control" id="nome"
+                  [ngClass]="{ 'is-invalid': submitted && f.nome.errors }">
+                <div *ngIf="submitted && f.nome.errors" class="invalid-feedback">
+                  <div *ngIf="f.nome.errors.required">Preencher campo</div>
+                </div>
+              </div>
+              <div class="form-group col-4">
+                <label for="familia" class="mr-2">Familia</label>
+                <input formControlName="familia" class="form-control" id="familia" [(ngModel)]="model"
+                  [ngbTypeahead]="search" [resultFormatter]="formatter" [inputFormatter]="formatter"
+                  [ngClass]="{ 'is-invalid': submitted && f.familia.errors }">
+                <div *ngIf="submitted && f.familia.errors" class="invalid-feedback">
+                  <div *ngIf="f.familia.errors.required">Preencher campo</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 mb-3">
+            <div class="row">
+              <div class="form-group col-4">
+                <label for="familia" class="mr-2">SubFamilia</label>
+                <input formControlName="subfamilia" class="form-control" [(ngModel)]="modelSub"
+                  [ngbTypeahead]="searchSub" [resultFormatter]="formatter" [inputFormatter]="formatter">
+              </div>
+              <div class="form-group col-4">
+                <label for="supertribo" class="mr-2">Supetribo</label>
+                <input formControlName="supertribo" class="form-control" [(ngModel)]="modelSupetribo"
+                  [ngbTypeahead]="searchSupertribo" [resultFormatter]="formatter" [inputFormatter]="formatter">
+              </div>
+              <div class=" form-group col-4">
+                <button class="btn btn-success mr-2">Salvar</button>
+                <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancelar</button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="col-12">
+          <div class="container">
+            <table datatable [dtOptions]="dtOptions" class="table display table-striped table-bordered table-condensed"
+              style="width:100%" [dtTrigger]="dtTrigger">
+              <thead>
+                <tr>
+                  <th>Tribo</th>
+                  <th>Familia</th>
+                  <th>SubFamilia</th>
+                  <th>Supertribo</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let d of tribos">
+                  <td>{{ d.nome}}</td>
+                  <td>{{ d.familia?.nome}}</td>
+                  <td>{{ d.subfamilia?.nome}}</td>
+                  <td>{{ d.supertribo?.nome}}</td>
+                  <td>
+                    <button class="btn btn-primary btn-sm mr-2" (click)="edit(d)">
+                      <nb-icon icon="edit"></nb-icon>
+                    </button>
+                    <button class="btn btn-danger btn-sm" (click)="delete(d)">
+                      <nb-icon icon="trash"></nb-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+
+            </table>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

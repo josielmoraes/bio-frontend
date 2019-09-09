@@ -1,0 +1,77 @@
+<div class="container-fluid">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>Reino</nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="form" (ngSubmit)="submitHandler()">
+
+          <div class="row">
+            <input formControlName="id" type="hidden">
+            <div class="form-group col-4">
+              <label for="pais" class="mr-2">Pais</label>
+              <input formControlName="pais" class="form-control" id="pais"
+                [ngClass]="{ 'is-invalid': submitted && f.pais.errors }">
+              <div *ngIf="submitted && f.pais.errors" class="invalid-feedback">
+                <div *ngIf="f.pais.errors.required">Preencher campo</div>
+              </div>
+            </div>
+            <div class="form-group col-4">
+              <label for="estado" class="mr-2">Estado</label>
+              <input formControlName="estado" class="form-control" id="estado"
+                [ngClass]="{ 'is-invalid': submitted && f.estado.errors }">
+              <div *ngIf="submitted && f.estado.errors" class="invalid-feedback">
+                <div *ngIf="f.estado.errors.required">Preencher campo</div>
+              </div>
+            </div>
+            <div class="form-group col-4">
+              <label for="cidade" class="mr-2">Cidade</label>
+              <input formControlName="cidade" class="form-control" id="cidade"
+                [ngClass]="{ 'is-invalid': submitted && f.cidade.errors }">
+              <div *ngIf="submitted && f.cidade.errors" class="invalid-feedback">
+                <div *ngIf="f.cidade.errors.required">Preencher campo</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-4">
+              <button class="btn btn-success mr-2">Salvar</button>
+              <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancelar</button>
+            </div>
+          </div>
+
+        </form>
+        <div class="col-12">
+          <div class="container">
+            <table datatable [dtOptions]="dtOptions" class="table display table-striped table-bordered table-condensed"
+              [dtTrigger]="dtTrigger" style="width:100%">
+              <thead>
+                <tr>
+                  <th>Pais</th>
+                  <th>Estado</th>
+                  <th>Cidade</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let d of localidades">
+                  <td>{{ d.pais}}</td>
+                  <td>{{ d.estado}}</td>
+                  <td>{{ d.cidade}}</td>
+                  <td>
+                    <button class="btn btn-primary btn-sm mr-2" (click)="edit(d)">
+                      <nb-icon icon="edit"></nb-icon>
+                    </button>
+                    <button class="btn btn-danger btn-sm" (click)="delete(d)">
+                      <nb-icon icon="trash"></nb-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+
+            </table>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
